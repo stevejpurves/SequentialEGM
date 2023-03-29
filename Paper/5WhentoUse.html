@@ -1,0 +1,546 @@
+
+
+<!DOCTYPE html>
+
+
+<html >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Conditions for using the Sequential Endogenous Grid Method &#8212; My Jupyter Book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Paper/5WhentoUse';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Conclusion" href="6Conclusion.html" />
+    <link rel="prev" title="Multivariate Interpolation on Non-Rectilinear Grids" href="4UnstructuredInterp.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">My Jupyter Book</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../README.html">
+                    EGM^n: The Sequential Endogenous Grid Method
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Calibration/README.html">Calibration of Model Parameters Should Be Here</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Code/README.html">Contains computer code used to generate all results</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Code/Empirical/README.html">Code to Produce empirical results</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Equations/README.html">Equations That Should Be Reproducible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Figures/README.html">All Figures for Paper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Highlighted/README.html">Highlighted Passages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2Method.html">The Sequential Endogenous Grid Method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3HigherDims.html">The EGM<span class="math notranslate nohighlight">\(^n\)</span> in Higher Dimensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4UnstructuredInterp.html">Multivariate Interpolation on Non-Rectilinear Grids</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Conditions for using the Sequential Endogenous Grid Method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6Conclusion.html">Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7Appendix.html">Solving the illustrative G2EGM model with EGM<span class="math notranslate nohighlight">\(^n\)</span></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tables/README.html">LaTeX Input Files for Tables</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Paper/5WhentoUse.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Conditions for using the Sequential Endogenous Grid Method</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#splitting-the-problem-into-subproblems">Splitting the problem into subproblems</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#separable-utility-functions">Separable utility functions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#differentiable-and-invertible-transition">Differentiable and invertible transition</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-endogenous-grid-method-for-subproblems">The Endogenous Grid Method for Subproblems</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#utility-function">Utility function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transition">Transition</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="conditions-for-using-the-sequential-endogenous-grid-method">
+<span id="conditions"></span><h1>Conditions for using the Sequential Endogenous Grid Method<a class="headerlink" href="#conditions-for-using-the-sequential-endogenous-grid-method" title="Permalink to this headline">#</a></h1>
+<section id="splitting-the-problem-into-subproblems">
+<span id="id1"></span><h2>Splitting the problem into subproblems<a class="headerlink" href="#splitting-the-problem-into-subproblems" title="Permalink to this headline">#</a></h2>
+<p>The first step in using the Sequential Endogenous Grid Method is to split the problem into subproblems. This process of splitting up the problem has to be strategic to not insert additional complexity into the original problem. If one is not careful when doing this, the subproblems can become more complex and intractable than the original problem.</p>
+<p>To split up the problem, we first count the number of control variables or decisions faced by the agent. Ideally, if the agent has <span class="math notranslate nohighlight">\(n\)</span> control variables, then the problem should be split into <span class="math notranslate nohighlight">\(n\)</span> subproblems, each handling a different control variable. For counting the number of control variables, it is important to not double count variables which are equivalent and have market clearing conditions. For example, the decision of how much to consume and how much to save may seem like two different choices, but because of the market clearing condition <span class="math notranslate nohighlight">\(\cRat + \aRat = \mRat\)</span> they are resolved simultaneously and count as only one decision variable. Similarly, the
+choice between labor and leisure are simultaneous and count as only one decision.</p>
+<p>Having counted our control variables, we look for differentiable and invertible utility functions which are separable in the dynamic programming problem, such as in <span class="xref myst">Section %s</span> of the paper, or differentiable and invertible functions in the transition, as in <span class="xref myst">Section %s</span> of the paper.</p>
+<section id="separable-utility-functions">
+<h3>Separable utility functions<a class="headerlink" href="#separable-utility-functions" title="Permalink to this headline">#</a></h3>
+<p>In <span class="xref myst">Section %s</span>, we have additively separable utility of consumption and leisure, which allows for each of these control variables to be handled by separate subproblems. So, it makes sense to split the utility between subproblems and attach one to the consumption subproblem and one to the leisure subproblem.</p>
+<p>As mentioned in that section, however, there are only two separable utility functions in the problem which have been assigned to two subproblems already. This leaves one control variable without a separable utility function. In that case, there is not another Endogenous Grid Method step to exploit, and this subproblem has to be handled by standard convex optimization techniques such as maximization of the value function (VFI) or finding the root of the Euler equation (PFI).</p>
+<p>Now that we have split the problem into conceptual subproblems, it is important to sequence them in such a way that they don’t become more complex than the original problem. The key here is to avoid adding unnecessary state variables. For example, in the consumption-leisure-portfolio problem, if we were to choose consumption first, we would have to track the wage rate into the following leisure subproblem. This would mean that our consumption problem would be two-dimensional as well as our labor decision problem. As presented, the choice of order in <span class="xref myst">Section %s</span> ensures that the consumption problem is one-dimensional, as we can shed the information about the wage rate offer after the agent has made their labor-leisure decision. If we did this the other way, the problem would be more complex and require additional computational resources.</p>
+<p>The consumption subproblem would be two-dimensional instead of one-dimensional, adding more complexity,</p>
+<p>\begin{equation}
+\begin{split}
+\vFunc(\bRat, \tShkEmp) &amp; = \max_{\cRat} \uFunc(\cRat) + \vOpt(\bRat’, \tShkEmp) \
+&amp; \text{s.t.}\
+\bRat’ &amp; = \bRat - \cRat \ge - \tShkEmp
+\end{split}
+\end{equation}</p>
+<p>while the labor-leisure subproblem would have an additional constraint</p>
+<p>\begin{equation}
+\begin{split}
+\vOpt(\bRat’, \tShkEmp) &amp; = \max_{\leisure} \h(\leisure) + \vEnd(\aRat) \
+&amp; \text{s.t.} \
+0 &amp; \le \leisure \le 1 \
+\aRat &amp; = \bRat’ + \tShkEmp(1 - \leisure) \ge 0.
+\end{split}
+\end{equation}</p>
+<p>Therefore, strategic ordering of subproblems can greatly simplify the solution process and reduce computational the burden.</p>
+</section>
+<section id="differentiable-and-invertible-transition">
+<h3>Differentiable and invertible transition<a class="headerlink" href="#differentiable-and-invertible-transition" title="Permalink to this headline">#</a></h3>
+<p>In <span class="xref myst">Section %s</span>, we see that a problem with a differentiable and invertible transition can also be used to embed an additional Endogenous Grid Method step. Because the transition applies independently to a state variable that is not related to the other control variable, consumption, it can be handled separately from the consumption subproblem.</p>
+<p>In this particular problem, however, it turns out to make no difference how we order the two subproblems. This is because the control variables, consumption and pension deposit, each affect a separate resource account, namely market resources and pension balance. Because of this, the two subproblems are independent of each other and can be solved in any order.</p>
+<p>A good rule of thumb is that when splitting up a problem into subproblems, we should try to reduce the information set that is passed onto the next subproblem. In <span class="xref myst">Section %s</span>, choosing leisure-labor and realizing total market resources before consumption allows us to shed the wage rate offer state variable before the consumption problem, and we know that for the portfolio choice we only need to know liquid assets after expenditures (consumption). Thus, the order makes intuitive sense; agent first chooses leisure-labor, realizing total market resources, then chooses consumption and savings, and finally chooses their risky portfolio choice. In <span class="xref myst">Section %s</span>, there are two expenditures that are independent of each other, consumption and deposit, and making one decision or the other first does not reduce the information set for the agent, thus the order of these subproblems does not matter.</p>
+</section>
+</section>
+<section id="the-endogenous-grid-method-for-subproblems">
+<span id="id2"></span><h2>The Endogenous Grid Method for Subproblems<a class="headerlink" href="#the-endogenous-grid-method-for-subproblems" title="Permalink to this headline">#</a></h2>
+<p>Once we have strategically split the problem into subproblems, we can use the Endogenous Grid Method in each applicable subproblem while iterating backwards from the terminal period. As we discussed in Sections \ref{sec:method} and \ref{sec:higherdims}, the EGM step can be applied when there is a separable, differentiable and invertible utility function in the subproblem or when there is a differentiable and invertible transition in the subproblem. We will discuss each of these cases in turn.</p>
+<section id="utility-function">
+<h3>Utility function<a class="headerlink" href="#utility-function" title="Permalink to this headline">#</a></h3>
+<p>A generic subproblem with a differentiable and invertible utility function can be characterized as follows:</p>
+<p>\begin{equation}
+\begin{split}
+\VFunc(\xRat) &amp;  = \max_{\yRat  \in \PGro(\xRat)} \UFunc(\xRat, \yRat) + \DiscFac \WFunc(\aRat) \
+&amp; \text{s.t.} \
+\aRat &amp; = \TFunc(\xRat,\yRat)
+\end{split}
+\end{equation}</p>
+<p>For an interior solution, the first-order condition is thus</p>
+<p>\begin{equation}
+\UFunc’<em>{\yRat}(\xRat, \yRat) + \DiscFac \WFunc’(\aRat)\TFunc’</em>{\yRat}(\xRat,\yRat) = 0
+\end{equation}</p>
+<p>If, as we assumed, the utility function is differentiable and invertible, then the Endogenous Grid Method consists of</p>
+<p>\begin{equation}
+\yRat = \left(\UFunc’<em>{\yRat}(\xRat, \yRat)\right)^{-1} \left[ -\DiscFac \WFunc’(\aRat)\TFunc’</em>{\yRat}(\xRat,\yRat)\right]
+\end{equation}</p>
+<p>By using an exogenous grid of the post-decision state <span class="math notranslate nohighlight">\(\aRat\)</span>, we can solve for the optimal decision rule <span class="math notranslate nohighlight">\(\yRat\)</span> at each point on the grid. This is the Endogenous Grid Method step.</p>
+</section>
+<section id="transition">
+<h3>Transition<a class="headerlink" href="#transition" title="Permalink to this headline">#</a></h3>
+<p>If the generic subproblem has no utility, but instead has a differentiable and invertible transition, then the Endogenous Grid Method can still be used.</p>
+<p>\begin{equation}
+\begin{split}
+\VFunc(\xRat) &amp;  = \max_{\yRat  \in \PGro(\xRat)}  \WFunc(\aRat) \
+&amp; \text{s.t.} \
+\aRat &amp; = \TFunc(\xRat,\yRat)
+\end{split}
+\end{equation}</p>
+<p>Here, the first-order condition is</p>
+<p>\begin{equation}
+\WFunc’(\aRat)\TFunc’_{\yRat}(\xRat,\yRat)  = 0
+\end{equation}</p>
+<p>and the Endogenous Grid Method step is</p>
+<p>\begin{equation}
+\yRat = \left(\TFunc’_{\yRat}(\xRat,\yRat)\right)^{-1} \left[ 1 / \WFunc’(\aRat)\right]
+\end{equation}</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Paper"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="4UnstructuredInterp.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Multivariate Interpolation on Non-Rectilinear Grids</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="6Conclusion.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Conclusion</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#splitting-the-problem-into-subproblems">Splitting the problem into subproblems</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#separable-utility-functions">Separable utility functions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#differentiable-and-invertible-transition">Differentiable and invertible transition</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-endogenous-grid-method-for-subproblems">The Endogenous Grid Method for Subproblems</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#utility-function">Utility function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transition">Transition</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

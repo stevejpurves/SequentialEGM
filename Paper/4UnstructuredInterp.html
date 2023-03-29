@@ -1,0 +1,571 @@
+
+
+<!DOCTYPE html>
+
+
+<html >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Multivariate Interpolation on Non-Rectilinear Grids &#8212; My Jupyter Book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Paper/4UnstructuredInterp';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Conditions for using the Sequential Endogenous Grid Method" href="5WhentoUse.html" />
+    <link rel="prev" title="The EGM\(^n\) in Higher Dimensions" href="3HigherDims.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">My Jupyter Book</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../README.html">
+                    EGM^n: The Sequential Endogenous Grid Method
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Calibration/README.html">Calibration of Model Parameters Should Be Here</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Code/README.html">Contains computer code used to generate all results</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Code/Empirical/README.html">Code to Produce empirical results</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Equations/README.html">Equations That Should Be Reproducible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Figures/README.html">All Figures for Paper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Highlighted/README.html">Highlighted Passages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2Method.html">The Sequential Endogenous Grid Method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3HigherDims.html">The EGM<span class="math notranslate nohighlight">\(^n\)</span> in Higher Dimensions</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Multivariate Interpolation on Non-Rectilinear Grids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5WhentoUse.html">Conditions for using the Sequential Endogenous Grid Method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6Conclusion.html">Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7Appendix.html">Solving the illustrative G2EGM model with EGM<span class="math notranslate nohighlight">\(^n\)</span></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tables/README.html">LaTeX Input Files for Tables</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Paper/4UnstructuredInterp.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Multivariate Interpolation on Non-Rectilinear Grids</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#warped-grid-interpolation-wgi">Warped Grid Interpolation (WGI)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unstructured-grids">Unstructured Grids</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-process-regression">Gaussian Process Regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-of-the-gpr">An example of the GPR</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="multivariate-interpolation-on-non-rectilinear-grids">
+<span id="gpr"></span><h1>Multivariate Interpolation on Non-Rectilinear Grids<a class="headerlink" href="#multivariate-interpolation-on-non-rectilinear-grids" title="Permalink to this headline">#</a></h1>
+<p>This section presents alternative interpolation methods for non-rectilinear grids. First, I present the relatively simple case of fast warped interpolation on a curvilinear grid, which improves upon the interpolation in <a href="#id1"><span class="problematic" id="id2">White2015</span></a>. Then, I present a machine learning approach to interpolation on unstructured grids based on Gaussian Process Regression as presented in <a href="#id3"><span class="problematic" id="id4">Scheidegger2019</span></a>.</p>
+<section id="warped-grid-interpolation-wgi">
+<span id="id5"></span><h2>Warped Grid Interpolation (WGI)<a class="headerlink" href="#warped-grid-interpolation-wgi" title="Permalink to this headline">#</a></h2>
+<p>Assume we have a set of points indexed by <span class="math notranslate nohighlight">\((i,j)\)</span> in two-dimensional space for which we have corresponding functional values in a third dimension, such that <span class="math notranslate nohighlight">\(f(x_{ij},y_{ij}) = z_{ij}\)</span>. In practice, we are interested in cases where the <span class="math notranslate nohighlight">\(z_{ij}\)</span> are difficult to compute and <span class="math notranslate nohighlight">\(f(x_{ij},y_{ij})\)</span> is unknown, so we are unable to compute them at other values of <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> — which is why we want to interpolate<a class="footnote-reference brackets" href="#f3" id="id6">1</a>. These <span class="math notranslate nohighlight">\((x_{ij},y_{ij})\)</span> points however are not evenly spaced and do not form a rectilinear grid which would make it easy to interpolate the function off the grid. Nevertheless, these points do have a regular structure as we will see.</p>
+<p>\begin{figure}
+\centering
+\includegraphics[width=0.8\linewidth]{Figures/WarpedInterpolation.pdf}
+\caption{True function and curvilinear grid of points for which we know the value of the function.}
+\notinsubfile{\label{fig:warped_interp}}
+\end{figure}</p>
+<p>In Figure~\ref{fig:warped_interp}, we can see the true function in three-dimensional space, along with the points for which we actually know the value of the function. The underlying regular structure comes from the points’ position in the matrix, the <span class="math notranslate nohighlight">\((i,j)\)</span> coordinates. If we join the points along every row and every column, we can see that the resulting grid is regular and piecewise affine (curvilinear).</p>
+<p>In Figure~\ref{fig:homotopy} we see the values of the function at their index coordinate points in the matrix. We can see that there exists a mapping between the curvilinear grid and the index coordinates of the matrix.</p>
+<p>\begin{figure}
+\centering
+\includegraphics[width=0.8\linewidth]{Figures/Homotopy.pdf}
+\caption{Homotopy between the curvilinear grid and the index coordinates of the matrix.}
+\notinsubfile{\label{fig:homotopy}}
+\end{figure}</p>
+<p>The objective is to be able to interpolate the value of the function at any point off the grid, where presumably we are only interested in points internal to the curvilinear space and not outside the boundaries. For example, we can imagine that we want an approximation to the function at the point <span class="math notranslate nohighlight">\((x,y) = (3, 5)\)</span> pictured Figure~\ref{fig:mapping}. If we could find the corresponding point in the coordinate grid, interpolation would be straightforward. We can find where the <span class="math notranslate nohighlight">\(x\)</span>-coordinate of the point of interest intersects with the index-coordinates of the matrix. This is similar to assuming that we have 3 linear interpolators formed by connecting the points on the green lines in the x-direction, and for each interpolator we can approximate the corresponding y and z values using the grid data. Now, for each circle in Figure~\ref{fig:mapping}, we have a corresponding pair <span class="math notranslate nohighlight">\((y,z)\)</span>, and we can interpolate in the y-direction to find the corresponding z-value for the point’s y-coordinate<a class="footnote-reference brackets" href="#f4" id="id7">2</a>.</p>
+<p>\begin{figure}
+\centering
+\includegraphics[width=0.8\linewidth]{Figures/Mapping.pdf}
+\caption{The method consist of extending the loci of points in the <span class="math notranslate nohighlight">\(x\)</span> dimension to find the corresponding crossing points in the <span class="math notranslate nohighlight">\(y\)</span> dimension.}
+\notinsubfile{\label{fig:mapping}}
+\end{figure}</p>
+</section>
+<section id="unstructured-grids">
+<span id="id8"></span><h2>Unstructured Grids<a class="headerlink" href="#unstructured-grids" title="Permalink to this headline">#</a></h2>
+<p>Unstructured interpolation arises in many dynamic programming applications when using the Endogenous Grid Method because the first-order conditions might be highly non-linear and non-monotonic, or because boundary constraints induce kinks in the policy and value functions. In these cases, the grid points generated by the EGM step are not evenly spaced, leading to the need for curvilinear interpolation. We saw in the previous subsection an approach to curvilinear interpolation based on <a href="#id9"><span class="problematic" id="id10">White2015</span></a> that is incapable of interpolation on structured grids. A similar approach was presented in <a href="#id11"><span class="problematic" id="id12">Ludwig2018</span></a> which used Delaunay interpolation. However, this approach is not well suited for our purposes because triangulation can be computationally intensive and slow, often offsetting the efficiency gains from the Endogenous Grid Method.</p>
+<p>As an alternative to these methods, I introduce the use of Gaussian Process Regression (GPR) along with the Endogenous Grid Method. GPR is computationally efficient, and tools exist to easily parallelize and take advantage of hardware such as Graphics Processing Units (GPU)<a class="footnote-reference brackets" href="#f5" id="id13">3</a>.</p>
+<section id="gaussian-process-regression">
+<h3>Gaussian Process Regression<a class="headerlink" href="#gaussian-process-regression" title="Permalink to this headline">#</a></h3>
+<p>A Gaussian Process is an infinite dimensional random process for which every subset of random variables is jointly Gaussian or has a multivariate normal distribution.</p>
+<p>\begin{equation}
+\begin{gathered}
+\mathbf{X} \sim \mathcal{N}(\mathbf{\mu}, \mathbf{\Sigma}) \quad \text{s.t.} \quad x_i \sim \mathcal{N}(\mu_i, \sigma_{ii}) \
+\text{and} \quad  \sigma_{ij} = \Ex[(x_i - \mu_i)(x_j - \mu_j)] \quad \forall i,j \in {1, \ldots, n}.
+\end{gathered}
+\end{equation}</p>
+<p>where</p>
+<p>\begin{equation}
+\mathbf{X} = \begin{bmatrix}
+x_1    \
+x_2    \
+\vdots \
+x_n
+\end{bmatrix}
+\quad
+\mathbf{\mu} = \begin{bmatrix}
+\mu_1  \
+\mu_2  \
+\vdots \
+\mu_n
+\end{bmatrix}
+\quad
+\mathbf{\Sigma} = \begin{bmatrix}
+\sigma_{11} &amp; \sigma_{12} &amp; \cdots &amp; \sigma_{1n} \
+\sigma_{21} &amp; \sigma_{22} &amp; \cdots &amp; \sigma_{2n} \
+\vdots      &amp; \vdots      &amp; \ddots &amp; \vdots      \
+\sigma_{n1} &amp; \sigma_{n2} &amp; \cdots &amp; \sigma_{nn}
+\end{bmatrix}.
+\end{equation}</p>
+<p>Being infinitely dimensional, a Gaussian Process can be used to represent a probability distribution over the space of functions in <span class="math notranslate nohighlight">\(n\)</span> dimensions. Thus, a Gaussian Process Regression is used to find the best fit function to a set of data points.</p>
+<p>\begin{equation}
+\mathbb{P}(\mathbf{f} | \mathbf{X}) = \mathcal{N}(\mathbf{f} | \mathbf{m}, \mathbf{K})
+\end{equation}</p>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{f}\)</span> is the vector of function values at the points <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{m}\)</span> is the mean of the function, and <span class="math notranslate nohighlight">\(\mathbf{K}\)</span> is a kernel function that describes the covariance between the function values at different points.</p>
+<p>A standard kernel function is the squared exponential kernel, or the radial basis function kernel, which is defined as</p>
+<p>\begin{equation}
+k(\mathbf{x}_i, \mathbf{x}_j) = \sigma^2_f \exp\left(-\frac{1}{2l^2} (\mathbf{x}_i - \mathbf{x}_j)’ (\mathbf{x}_i - \mathbf{x}_j)\right).
+\end{equation}</p>
+<p>Using GPR to interpolate a function <span class="math notranslate nohighlight">\(f\)</span>, we can both predict the value of the function at a point <span class="math notranslate nohighlight">\(\mathbf{x}_*\)</span> and the uncertainty in the prediction, which provides useful information as to the accuracy of the approximation.</p>
+</section>
+<section id="an-example-of-the-gpr">
+<h3>An example of the GPR<a class="headerlink" href="#an-example-of-the-gpr" title="Permalink to this headline">#</a></h3>
+<p>In Figure~\ref{fig:true_function}, we see the function we are trying to approximate along with a sample of data points for which we know the value of the function. In practice, the value of the function is unknown and/or expensive to compute, so we must use a limited amount of data to approximate it.</p>
+<p>\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{Figures/true_function.pdf}
+\caption{The true function that we are trying to approximate and a sample of data points.}
+\notinsubfile{\label{fig:true_function}}
+\end{figure}</p>
+<p>As we discussed, a Gaussian Process is an infinite dimensional random process which can be used to represent a probability of distributions over the space of functions. In Figure~\ref{fig:gpr_sample}, we see a random sample of functions from the GPR posterior, which is a Gaussian Process conditioned on fitting the data. From this small sample of functions, we can see that the GP generates functions that fit the data well, and the goal of GPR is to find the one function that best fits the data given some hyperparameters by minimizing the negative log-likelihood of the data.</p>
+<p>\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{Figures/gpr_sample.pdf}
+\caption{A random sample of functions from the GPR posterior that fit the data. The goal of GPR is to find the function that best fits the data.}
+\notinsubfile{\label{fig:gpr_sample}}
+\end{figure}</p>
+<p>In Figure~\ref{fig:gpr}, we see the result of GPR with a particular parametrization<a class="footnote-reference brackets" href="#f6" id="id14">4</a> of the kernel function. The dotted line shows the true function, while the blue dots show the known data points. GPR provides the mean function which best fits the data, represented in the figure as an orange line. The shaded region represents a 95% confidence interval, which is the uncertainty of the predicted function. Along with finding the best fit of the function, GPR provides the uncertainty of the prediction, which is useful information as to the accuracy of the approximation.</p>
+<p>\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{Figures/gpr.pdf}
+\caption{GPR finds the function that best fits the data given some hyperparameters. GPR then optimizes over the parameter space to find the function that minimizes the negative log-likelihood of the data.}
+\notinsubfile{\label{fig:gpr}}
+\end{figure}</p>
+<hr class="footnotes docutils" />
+<dl class="footnote brackets">
+<dt class="label" id="f3"><span class="brackets"><a class="fn-backref" href="#id6">1</a></span></dt>
+<dd><p>For this illustration, we generate <span class="math notranslate nohighlight">\(z\)</span>’s arbitrarily using the function $<span class="math notranslate nohighlight">\(f(x,y) = (xy)^{1/4}.\)</span>$</p>
+</dd>
+<dt class="label" id="f4"><span class="brackets"><a class="fn-backref" href="#id7">2</a></span></dt>
+<dd><p>For more examples of the Warped Grid Interpolation method in action, see the github project \href{<a class="github reference external" href="https://github.com/alanlujan91/multinterp/blob/main/notebooks/CurvilinearInterpolation.ipynb">alanlujan91/multinterp</a>}{\texttt{alanlujan91/multinterp}}.</p>
+</dd>
+<dt class="label" id="f5"><span class="brackets"><a class="fn-backref" href="#id13">3</a></span></dt>
+<dd><p><a href="#id15"><span class="problematic" id="id16">Gardner2018</span></a></p>
+</dd>
+<dt class="label" id="f6"><span class="brackets"><a class="fn-backref" href="#id14">4</a></span></dt>
+<dd><p>For details see notebook.</p>
+</dd>
+</dl>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Paper"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="3HigherDims.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">The EGM<span class="math notranslate nohighlight">\(^n\)</span> in Higher Dimensions</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="5WhentoUse.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Conditions for using the Sequential Endogenous Grid Method</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#warped-grid-interpolation-wgi">Warped Grid Interpolation (WGI)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unstructured-grids">Unstructured Grids</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-process-regression">Gaussian Process Regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-of-the-gpr">An example of the GPR</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

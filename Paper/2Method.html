@@ -1,0 +1,695 @@
+
+
+<!DOCTYPE html>
+
+
+<html >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>The Sequential Endogenous Grid Method &#8212; My Jupyter Book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Paper/2Method';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The EGM\(^n\) in Higher Dimensions" href="3HigherDims.html" />
+    <link rel="prev" title="Introduction" href="1Intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">My Jupyter Book</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../README.html">
+                    EGM^n: The Sequential Endogenous Grid Method
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Calibration/README.html">Calibration of Model Parameters Should Be Here</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Code/README.html">Contains computer code used to generate all results</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Code/Empirical/README.html">Code to Produce empirical results</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Equations/README.html">Equations That Should Be Reproducible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Figures/README.html">All Figures for Paper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Highlighted/README.html">Highlighted Passages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1Intro.html">Introduction</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">The Sequential Endogenous Grid Method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3HigherDims.html">The EGM<span class="math notranslate nohighlight">\(^n\)</span> in Higher Dimensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4UnstructuredInterp.html">Multivariate Interpolation on Non-Rectilinear Grids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5WhentoUse.html">Conditions for using the Sequential Endogenous Grid Method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6Conclusion.html">Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7Appendix.html">Solving the illustrative G2EGM model with EGM<span class="math notranslate nohighlight">\(^n\)</span></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tables/README.html">LaTeX Input Files for Tables</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Paper/2Method.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>The Sequential Endogenous Grid Method</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-basic-model">A basic model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#restating-the-problem-sequentially">Restating the problem sequentially</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-portfolio-decision-subproblem">The portfolio decision subproblem</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-note-on-avoiding-taking-expectations-more-than-once">A note on avoiding taking expectations more than once.</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-consumption-saving-subproblem">The consumption-saving subproblem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-labor-leisure-subproblem">The labor-leisure subproblem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#curvilinear-grids">Curvilinear Grids</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-parametrization">Alternative Parametrization</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="the-sequential-endogenous-grid-method">
+<span id="method"></span><h1>The Sequential Endogenous Grid Method<a class="headerlink" href="#the-sequential-endogenous-grid-method" title="Permalink to this headline">#</a></h1>
+<section id="a-basic-model">
+<h2>A basic model<a class="headerlink" href="#a-basic-model" title="Permalink to this headline">#</a></h2>
+<p>The baseline problem which I will use to demonstrate the Sequential Endogenous Grid Method (EGM<span class="math notranslate nohighlight">\(^n\)</span>) is a discrete time version of <a href="#id1"><span class="problematic" id="id2">Bodie1992</span></a> where a consumer has the ability to adjust their labor as well as their consumption in response to financial risk. The objective consists of maximizing the present discounted lifetime utility of consumption and leisure.</p>
+<p>\begin{equation}
+\VFunc_0(\BLev_0, \tShkEmp_0) = \max \Ex_{t} \left[ \sum_{n = 0}^{T-t} \DiscFac^{n} \utilFunc(\CLev_{t+n}, \Leisure_{t+n})  \right]
+\end{equation}</p>
+<p>In particular, this example makes use of a utility function that is based on Example 1 in the paper, which is that of additively separable utility of labor and leisure as</p>
+<p>\begin{equation}
+\utilFunc(\CLev, \Leisure) = \util(\CLev) + \h(\Leisure) = \frac{C^{1-\CRRA}}{1-\CRRA} + \labShare^{1-\CRRA} \frac{\Leisure^{1-\leiShare}}{1-\leiShare}
+\end{equation}</p>
+<p>where the term <span class="math notranslate nohighlight">\(\labShare^{1-\CRRA}\)</span> is introduced to allow for a balanced growth path as in <a href="#id3"><span class="problematic" id="id4">Mertens2011</span></a>. The use of additively separable utility is ad-hoc, as it will allow for the use of multiple EGM steps in the solution process, as we’ll see later.</p>
+<p>This model represents a consumer who begins the period with a level of bank balances <span class="math notranslate nohighlight">\(\bRat_{t}\)</span> and a given wage offer <span class="math notranslate nohighlight">\(\tShkEmp_{t}\)</span>. Simultaneously, they are able to choose consumption, labor intensity, and a risky portfolio share with the objective of maximizing their utility of consumption and leisure, as well as their future wealth.</p>
+<p>The problem can be written in normalized recursive form<a class="footnote-reference brackets" href="#f2" id="id5">1</a> as</p>
+<p>\begin{equation}
+\begin{split}
+\vFunc_{t}(\bRat_{t}, \tShkEmp_{t}) &amp; = \max_{{\cRat_{t},
+\leisure_{t}, \riskyshare_{t}}} \utilFunc(\cRat_{t}, \leisure_{t}) +
+\DiscFac \Ex_{t} \left[ \PGro_{t+1}^{1-\CRRA}
+\vFunc_{t+1} (\bRat_{t+1},
+\tShkEmp_{t+1}) \right] \
+&amp; \text{s.t.} \
+\labor_{t} &amp; = 1 - \leisure_{t} \
+\mRat_{t} &amp; = \bRat_{t} + \tShkEmp_{t}\labor_{t} \
+\aRat_{t} &amp; = \mRat_{t} - \cRat_{t} \
+\Rport_{t+1} &amp; = \Rfree + (\Risky_{t+1} - \Rfree)
+\riskyshare_{t} \
+\bRat_{t+1} &amp; = \aRat_{t} \Rport_{t+1} / \PGro_{t+1}
+\end{split}
+\end{equation}</p>
+<p>in which <span class="math notranslate nohighlight">\(\labor_{t}\)</span> is the time supplied to labor net of leisure, <span class="math notranslate nohighlight">\(\mRat_{t}\)</span> is the market resources totaling bank balances and labor income, <span class="math notranslate nohighlight">\(\aRat_{t}\)</span> is the amount of saving assets held by the consumer, and <span class="math notranslate nohighlight">\(\riskyshare_{t}\)</span> is the risky share of assets, which induce a <span class="math notranslate nohighlight">\(\Rport_{t+1}\)</span> return on portfolio that results in next period’s bank balances <span class="math notranslate nohighlight">\(\bRat_{t+1}\)</span> normalized by next period’s permanent income <span class="math notranslate nohighlight">\(\PGro_{t+1}\)</span>.</p>
+</section>
+<section id="restating-the-problem-sequentially">
+<span id="id6"></span><h2>Restating the problem sequentially<a class="headerlink" href="#restating-the-problem-sequentially" title="Permalink to this headline">#</a></h2>
+<p>We can make a few choices to create a sequential problem which will allow us to use multiple EGM steps in succession. First, the
+agent decides their labor-leisure trade-off and receives a wage. Their wage
+plus their previous bank balance then becomes their market resources. Second, given
+market resources, the agent makes a pure consumption-saving decision. Finally, given an amount of savings, the consumer then decides their risky portfolio share.</p>
+<p>Starting from the beginning of the period, we can define the labor-leisure problem as</p>
+<p>\begin{equation}
+\begin{split}
+\vFunc_{t}(\bRat_{t}, \tShkEmp_{t}) &amp; = \max_{ \leisure_{t}}
+\h(\leisure_{t}) + \vOpt_{t} (\mRat_{t}) \
+&amp; \text{s.t.} \
+0 &amp; \leq \leisure_{t} \leq 1 \
+\labor_{t} &amp; = 1 - \leisure_{t} \
+\mRat_{t} &amp; = \bRat_{t} + \tShkEmp_{t}\labor_{t}.
+\end{split}
+\end{equation}</p>
+<p>The pure consumption-saving problem is then</p>
+<p>\begin{equation}
+\begin{split}
+\vOpt_{t}(\mRat_{t}) &amp; = \max_{\cRat_{t}} \util(\cRat_{t}) + \DiscFac\vEnd_{t}(\aRat_{t}) \
+&amp; \text{s.t.} \
+0 &amp; \leq \cRat_{t} \leq \mRat_{t} \
+\aRat_{t} &amp; = \mRat_{t} - \cRat_{t}.
+\end{split}
+\end{equation}</p>
+<p>Finally, the risky portfolio problem is</p>
+<p>\begin{equation}
+\begin{split}
+\vEnd_{t}(\aRat_{t}) &amp; = \max_{\riskyshare_{t}}
+\Ex_{t} \left[ \PGro_{t+1}^{1-\CRRA}
+\vFunc_{t+1}(\bRat_{t+1},
+\tShkEmp_{t+1}) \right] \
+&amp; \text{s.t.} \
+0 &amp; \leq \riskyshare_{t} \leq 1 \
+\Rport_{t+1} &amp; = \Rfree + (\Risky_{t+1} - \Rfree)
+\riskyshare_{t} \
+\bRat_{t+1} &amp; = \aRat_{t} \Rport_{t+1} / \PGro_{t+1}.
+\end{split}
+\end{equation}</p>
+<p>This sequential approach is explicitly modeled after the nested approaches explored in <a href="#id7"><span class="problematic" id="id8">Clausen2020</span></a> and <a href="#id9"><span class="problematic" id="id10">Druedahl2021</span></a>. However, I will offer additional insights that expand on these methods. An important observation is that now, every single choice is self-contained in a subproblem, and although the structure is specifically chosen to minimize the number of state variables at every stage, the problem does not change by this structural imposition. This is because there is no additional information or realization of uncertainty that happens between decisions, as can be seen by the expectation operator being in the last subproblem. From the perspective of the consumer, these decisions are essentially simultaneous, but a careful organization into sub-period problems enables us to solve the model more efficiently and can provide key economic insights. In this problem, as we will see, a key insight will be the ability to explicitly calculate the marginal value of wealth and the Frisch elasticity of labor.</p>
+</section>
+<section id="the-portfolio-decision-subproblem">
+<span id="id11"></span><h2>The portfolio decision subproblem<a class="headerlink" href="#the-portfolio-decision-subproblem" title="Permalink to this headline">#</a></h2>
+<p>As useful as it is to be able to use the EGM step more than once, there are clear problems where the EGM step is not applicable. This basic labor-portfolio choice problem demonstrates where we can use an additional EGM step, and where we can not. First, we go over a subproblem where we can not use the EGM step.</p>
+<p>In reorganizing the labor-portfolio problem into subproblems, we assigned the utility of leisure to the leisure-labor subproblem and the utility of consumption to the consumption-savings subproblem. There are no more separable convex utility functions to assign to this problem, and even if we re-organized the problem in a way that moved one of the utility functions into this subproblem, they would not be useful in solving this subproblem via EGM as there is no direct relation between the risky share of portfolio and consumption or leisure. Therefore, the only way to solve this subproblem is through standard convex optimization and root-finding techniques.</p>
+<p>Restating the problem in compact form gives</p>
+<p>\begin{equation}
+\vEnd_{t}(\aRat_{t}) = \max_{\riskyshare_{t}}  \Ex_{t} \left[ \PGro_{t+1}^{1-\CRRA}
+\vFunc_{t+1}\left(\aRat_{t}(\Rfree + (\Risky_{t+1} - \Rfree) \riskyshare_{t}), \tShkEmp_{t+1}\right)
+\right].
+\end{equation}</p>
+<p>The first-order condition with respect to the risky portfolio share is then</p>
+<p>\begin{equation}
+\Ex_{t} \left[ \PGro_{t+1}^{-\CRRA} \vFunc_{t+1}^{\bRat}\left(\bRat_{t+1}, \tShkEmp_{t+1}\right) (\Risky_{t+1} - \Rfree)  \right] = 0.
+\end{equation}</p>
+<p>Finding the optimal risky share requires numerical optimization and root-solving of the first-order condition. To close out the problem, we can calculate the envelope condition as</p>
+<p>\begin{equation}
+\vEnd_{t}’(\aRat_{t}) =  \Ex_{t} \left[ \PGro_{t+1}^{-\CRRA} \vFunc_{t+1}^{\bRat}\left(\bRat_{t+1}, \tShkEmp_{t+1}\right) \Rport_{t+1}  \right].
+\end{equation}</p>
+<section id="a-note-on-avoiding-taking-expectations-more-than-once">
+<h3>A note on avoiding taking expectations more than once.<a class="headerlink" href="#a-note-on-avoiding-taking-expectations-more-than-once" title="Permalink to this headline">#</a></h3>
+<p>We could instead define the portfolio choice subproblem as:</p>
+<p>\begin{equation}
+\vEnd_{t}(\aRat_{t}) = \max_{\riskyshare_{t}} \vOptAlt(\aRat_{t}, \riskyshare_{t})
+\end{equation}</p>
+<p>where</p>
+<p>\begin{equation}
+\begin{split}
+\vOptAlt_{t}(\aRat_{t}, \riskyshare_{t}) &amp; =  \Ex_{t} \left[ \PGro_{t+1}^{1-\CRRA} \vFunc_{t+1}\left(\bRat_{t+1}, \tShkEmp_{t+1}\right)   \right] \
+\Rport_{t+1} &amp; = \Rfree + (\Risky_{t+1} - \Rfree) \riskyshare_{t} \
+\bRat_{t+1} &amp; = \aRat_{t} \Rport_{t+1} / \PGro_{t+1}
+\end{split}
+\end{equation}</p>
+<p>In this case, the process is similar. The only difference is that we don’t have to take expectations more than once. Given the next period’s solution, we can calculate the marginal value functions as:</p>
+<p>\begin{equation}
+\begin{split}
+\vOptAlt_{t}^{\aRat}(\aRat_{t}, \riskyshare_{t}) &amp; =  \Ex_{t} \left[ \PGro_{t+1}^{-\CRRA} \vFunc_{t+1}’\left(\bRat_{t+1}, \tShkEmp_{t+1}\right) \Rport_{t+1}   \right] \
+\vOptAlt_{t}^{\riskyshare}(\aRat_{t}, \riskyshare_{t}) &amp; =  \Ex_{t} \left[ \PGro_{t+1}^{-\CRRA} \vFunc_{t+1}’\left(\bRat_{t+1}, \tShkEmp_{t+1}\right) \aRat_{t} (\Risky_{t+1} - \Rfree)   \right] \
+\end{split}
+\end{equation}</p>
+<p>If we are clever, we can calculate both of these in one step. Now, the optimal risky share can be found by the first-order condition and we can use it to evaluate the envelope condition.</p>
+<p>\begin{equation}
+\text{F.O.C.:} \qquad \vOptAlt_{t}^{\riskyshare}(\aRat_{t}, \riskyshare_{t}^{<em>})  = 0 \qquad
+\text{E.C.:} \qquad \vEnd_{t}^{\aRat}(\aRat_{t}) = \vOptAlt_{t}^{\aRat}(\aRat_{t}, \riskyshare_{t}^{</em>})
+\end{equation}</p>
+</section>
+</section>
+<section id="the-consumption-saving-subproblem">
+<span id="id12"></span><h2>The consumption-saving subproblem<a class="headerlink" href="#the-consumption-saving-subproblem" title="Permalink to this headline">#</a></h2>
+<p>The consumption-saving EGM follows <a href="#id13"><span class="problematic" id="id14">Carroll2006</span></a> but I will cover it for exposition. We can begin the solution process by restating the consumption-savings subproblem in a more compact form, substituting the market resources constraint and ignoring the no-borrowing constraint for now. The problem is:</p>
+<p>\begin{equation}
+\vOpt_{t}(\mRat_{t}) = \max_{\cRat_{t}} \util(\cRat_{t}) +
+\DiscFac \vEnd_{t}(\mRat_{t}-\cRat_{t})
+\end{equation}</p>
+<p>To solve, we derive the first-order condition with respect to <span class="math notranslate nohighlight">\(\cRat_{t}\)</span> which gives the familiar Euler equation:</p>
+<p>\begin{equation}
+\utilFunc’(\cRat_t) = \DiscFac \vEnd_{t}’(\mRat_{t} - \cRat_{t}) = \DiscFac
+\vEnd_{t}’(\aRat_{t})
+\end{equation}</p>
+<p>Inverting the above equation is the (first) EGM step.</p>
+<p>\begin{equation}
+\cEndFunc_{t}(\aRat_{t}) = \utilFunc’^{-1}\left( \DiscFac \vEnd_{t}’(\aRat_{t})
+\right)
+\end{equation}</p>
+<p>Given the utility function above, the marginal utility of consumption and its inverse are</p>
+<p>\begin{equation}
+\utilFunc’(\cRat) = \cRat^{-\CRRA} \qquad \utilFunc’^{-1}(\xRat) =
+\xRat^{-1/\CRRA}.
+\end{equation}</p>
+<p><a href="#id15"><span class="problematic" id="id16">Carroll2006</span></a> demonstrates that by using an exogenous grid of <span class="math notranslate nohighlight">\(\aMat\)</span> points we can find the unique
+<span class="math notranslate nohighlight">\(\cEndFunc_{t}(\aMat)\)</span> that optimizes the consumption-saving problem, since the first-order condition is necessary and sufficient.
+Further, using the market resources constraint, we can recover the exact amount
+of market resources that is consistent with this consumption-saving decision as</p>
+<p>\begin{equation}
+\mEndFunc_{t}(\aMat) = \cEndFunc_{t}(\aMat) + \aMat.
+\end{equation}</p>
+<p>This <span class="math notranslate nohighlight">\(\mEndFunc_{t}(\aMat)\)</span> is the ``endogenous’’ grid that is consistent
+with the exogenous decision grid <span class="math notranslate nohighlight">\(\aMat\)</span>. Now that we have a
+<span class="math notranslate nohighlight">\((\mEndFunc_{t}(\aMat), \cEndFunc_{t}(\aMat))\)</span> pair for each
+<span class="math notranslate nohighlight">\(\aRat \in \aMat\)</span>, we can construct an interpolating consumption function for
+market resources points that are off-the-grid.</p>
+<p>The envelope condition will be useful in the next section, but for completeness
+is defined here.</p>
+<p>\begin{equation}
+\vOpt_{t}’(\mRat_{t}) = \DiscFac \vEnd_{t}’(\aRat_{t}) = \utilFunc’(\cRat_{t})
+\end{equation}</p>
+</section>
+<section id="the-labor-leisure-subproblem">
+<span id="id17"></span><h2>The labor-leisure subproblem<a class="headerlink" href="#the-labor-leisure-subproblem" title="Permalink to this headline">#</a></h2>
+<p>The labor-leisure subproblem can  be restated more compactly as:</p>
+<p>\begin{equation}
+\vFunc_{t}(\bRat_{t}, \tShkEmp_{t}) = \max_{ \leisure_{t}}
+\h(\leisure_{t}) + \vOpt_{t}(\bRat_{t} +
+\tShkEmp_{t}(1-\leisure_{t}))
+\end{equation}</p>
+<p>The first-order condition with respect to leisure implies the labor-leisure Euler equation</p>
+<p>\begin{equation}
+\h’(\leisure_{t}) =	\vOpt_{t}’(\mRat_{t}) \tShkEmp_{t}
+\end{equation}</p>
+<p>The marginal utility of leisure and its inverse are</p>
+<p>\begin{equation}
+\h’(\leisure) = \labShare\leisure^{-\leiShare} \qquad
+\h’^{-1}(\xRat) = (\xRat/\labShare)^{-1/\leiShare}
+\end{equation}</p>
+<p>Using an exogenous grid of <span class="math notranslate nohighlight">\(\mMat\)</span> and <span class="math notranslate nohighlight">\(\tShkMat\)</span>, we can find leisure as</p>
+<p>\begin{equation}
+\zEndFunc_{t}(\mMat, \tShkMat) = \h’^{-1}\left(
+\vOpt_{t}’(\mMat) \tShkMat \right)
+\end{equation}</p>
+<p>In this case, it’s important to note that there are conditions for leisure itself. An agent with a small level of market resources <span class="math notranslate nohighlight">\(\mRat_{t}\)</span> might want to work more than their available time endowment, especially at higher levels of income <span class="math notranslate nohighlight">\(\tShkEmp_{t}\)</span>, if the utility of leisure is not enough to compensate for their low wealth. In these situations, the optimal unconstrained leisure might be negative, so we must impose a constraint on the optimal leisure function. This is similar to the treatment of an artificial borrowing constraint in the pure consumption subproblem. From now on, let’s call this constrained optimal function <span class="math notranslate nohighlight">\(\hat{\zEndFunc}_{t}(\mMat, \tShkMat)\)</span>, where</p>
+<p>\begin{equation}
+\hat{\zEndFunc}<em>{t}(\mMat, \tShkMat) = \max \left[ \min \left[ \zEndFunc</em>{t}(\mMat, \tShkMat), 1 \right], 0 \right]
+\end{equation}</p>
+<p>Then, we derive labor as <span class="math notranslate nohighlight">\(\lEndFunc_{t}(\mRat_{t}, \tShkEmp_{t}) = 1 -
+  \hat{\zEndFunc}_{t}(\mRat_{t}, \tShkEmp_{t})\)</span>. Finally, for each
+<span class="math notranslate nohighlight">\(\tShkEmp_{t}\)</span> and
+<span class="math notranslate nohighlight">\(\mRat_{t}\)</span> as an exogenous grid, we can find the endogenous grid of bank
+balances as <span class="math notranslate nohighlight">\(\bEndFunc_{t}(\mRat_{t}, \tShkEmp_{t}) = \mRat_{t} -
+  \tShkEmp_{t}\lEndFunc_{t}(\mRat_{t}, \tShkEmp_{t})\)</span>.</p>
+<p>The envelope condition then provides a heterogeneous Frisch elasticity of labor as simply</p>
+<p>\begin{equation}
+\vFunc_{t}^{b}(\bRat_{t}, \tShkEmp_{t}) = \vOpt_{t}’(\mRat_{t}) =
+\h’(\leisure_{t})/\tShkEmp_{t}.
+\end{equation}</p>
+</section>
+<section id="curvilinear-grids">
+<span id="id18"></span><h2>Curvilinear Grids<a class="headerlink" href="#curvilinear-grids" title="Permalink to this headline">#</a></h2>
+<p>Although EGM<span class="math notranslate nohighlight">\(^n\)</span> seems to be a simple approach, there is one important caveat that we have not discussed, which is the details of the interpolation. In the pure consumption-savings problem, a one-dimensional exogenous grid of post-decision liquid assets <span class="math notranslate nohighlight">\(\aMat\)</span> results in a one-dimensional endogenous grid of total market resources <span class="math notranslate nohighlight">\(\mMat\)</span>. However, as we know from standard EGM, the spacing in the <span class="math notranslate nohighlight">\(\mMat\)</span> grid is different from the spacing in the <span class="math notranslate nohighlight">\(\aMat\)</span> grid as the inverted Euler equation is non-linear. This is no problem in a one-dimensional problem as we can simply use non-uniform linear interpolation.</p>
+<p>However, the same is true of higher dimensional problems, where the exogenous grid gets mapped to a warped endogenous grid. In this case, it is not possible to use standard multi-linear interpolation, as the resulting endogenous grid is not rectilinear. Instead, I introduce a novel approach to interpolation that I call Warped Grid Interpolation (WGI), which is similar to <a href="#id19"><span class="problematic" id="id20">White2015</span></a>’s approach but computationally more efficient and robust. The details of this interpolation method will be further explained in <span class="xref myst">Section %s</span>, but for now, we show the resulting warped endogenous grid for the labor-leisure problem.</p>
+</section>
+<section id="alternative-parametrization">
+<span id="id21"></span><h2>Alternative Parametrization<a class="headerlink" href="#alternative-parametrization" title="Permalink to this headline">#</a></h2>
+<p>An alternative formulation for the utility of leisure is to state it in terms
+of the disutility of labor as in (references)</p>
+<p>\begin{equation}
+\h(\labor) = - \leiShare \frac{\labor^{1+\labShare}}{1+\labShare}
+\end{equation}</p>
+<p>In this case, we can restate the problem as</p>
+<p>\begin{equation}
+\h(\leisure) = - \leiShare
+\frac{(1-\leisure)^{1+\labShare}}{1+\labShare}
+\end{equation}</p>
+<p>The marginal utility of leisure and its inverse are</p>
+<p>\begin{equation}
+\h’(\leisure) = \leiShare(1-\leisure)^{\labShare} \qquad
+\h’^{-1}(\xRat) = 1 - (\xRat/\leiShare)^{1/\labShare}
+\end{equation}</p>
+<hr class="footnotes docutils" />
+<dl class="footnote brackets">
+<dt class="label" id="f2"><span class="brackets"><a class="fn-backref" href="#id5">1</a></span></dt>
+<dd><p>As in <a href="#id22"><span class="problematic" id="id23">Carroll2009</span></a>, where the utility of normalized consumption and leisure is defined as</p>
+<p>\begin{equation}
+\utilFunc(\cRat_{t}, \leisure_{t}) = \PLev_{t}^{1-\CRRA} \frac{\cRat_{t}^{1-\CRRA}}{1-\CRRA} + (\labShare\PLev_{t})^{1-\CRRA} \frac{\leisure_{t}^{1-\leiShare}}{1-\leiShare}
+\end{equation}</p>
+</dd>
+</dl>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Paper"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="1Intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="3HigherDims.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">The EGM<span class="math notranslate nohighlight">\(^n\)</span> in Higher Dimensions</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-basic-model">A basic model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#restating-the-problem-sequentially">Restating the problem sequentially</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-portfolio-decision-subproblem">The portfolio decision subproblem</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-note-on-avoiding-taking-expectations-more-than-once">A note on avoiding taking expectations more than once.</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-consumption-saving-subproblem">The consumption-saving subproblem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-labor-leisure-subproblem">The labor-leisure subproblem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#curvilinear-grids">Curvilinear Grids</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-parametrization">Alternative Parametrization</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

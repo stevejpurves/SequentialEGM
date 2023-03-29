@@ -1,0 +1,749 @@
+
+
+<!DOCTYPE html>
+
+
+<html >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Solving the illustrative G2EGM model with EGM\(^n\) &#8212; My Jupyter Book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Paper/7Appendix';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="LaTeX Input Files for Tables" href="../Tables/README.html" />
+    <link rel="prev" title="Conclusion" href="6Conclusion.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">My Jupyter Book</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../README.html">
+                    EGM^n: The Sequential Endogenous Grid Method
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Calibration/README.html">Calibration of Model Parameters Should Be Here</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Code/README.html">Contains computer code used to generate all results</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Code/Empirical/README.html">Code to Produce empirical results</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Equations/README.html">Equations That Should Be Reproducible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Figures/README.html">All Figures for Paper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Highlighted/README.html">Highlighted Passages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2Method.html">The Sequential Endogenous Grid Method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3HigherDims.html">The EGM<span class="math notranslate nohighlight">\(^n\)</span> in Higher Dimensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4UnstructuredInterp.html">Multivariate Interpolation on Non-Rectilinear Grids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5WhentoUse.html">Conditions for using the Sequential Endogenous Grid Method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6Conclusion.html">Conclusion</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Solving the illustrative G2EGM model with EGM<span class="math notranslate nohighlight">\(^n\)</span></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tables/README.html">LaTeX Input Files for Tables</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Paper/7Appendix.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Solving the illustrative G2EGM model with EGM^n</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-problem-for-a-retired-household">The problem for a retired household</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-problem-for-a-worker-household">The problem for a worker household</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applying-the-sequential-egm">Applying the Sequential EGM</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#solving-the-problem">Solving the problem</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solving-the-inner-consumption-saving-problem">Solving the Inner Consumption Saving Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solving-the-outer-pension-deposit-problem">Solving the Outer Pension Deposit Problem</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#is-g-invertible">Is g invertible?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-post-decision-value-and-marginal-value-functions">The Post-Decision Value and Marginal Value Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taste-shocks">Taste Shocks</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="solving-the-illustrative-g2egm-model-with-egm-n">
+<span id="id1"></span><h1>Solving the illustrative G2EGM model with EGM<span class="math notranslate nohighlight">\(^n\)</span><a class="headerlink" href="#solving-the-illustrative-g2egm-model-with-egm-n" title="Permalink to this headline">#</a></h1>
+<section id="the-problem-for-a-retired-household">
+<span id="id2"></span><h2>The problem for a retired household<a class="headerlink" href="#the-problem-for-a-retired-household" title="Permalink to this headline">#</a></h2>
+<p>I designate as <span class="math notranslate nohighlight">\(\wFunc_{t}(\mRat_{t})\)</span> the problem of a retired household at time <span class="math notranslate nohighlight">\(t\)</span> with total resources <span class="math notranslate nohighlight">\(\mRat\)</span>. The retired household solves a simple consumption-savings problem with no income uncertainty and a certain next period pension of <span class="math notranslate nohighlight">\(\underline{\tShkEmp}\)</span>.</p>
+<p>\begin{equation}
+\begin{split}
+\wFunc_{t}(\mRat_{t}) &amp; = \max_{\cRat_{t}} \util(\cRat_{t}) +
+\DiscFac \wFunc_{t+1}(\mRat_{t}) \
+&amp; \text{s.t.} \
+\aRat_{t} &amp; = \mRat_{t} - \cRat_{t} \
+\mRat_{t+1} &amp; = \Rfree_{\aRat} \aRat_{t} +
+\underline{\tShkEmp}
+\end{split}
+\end{equation}</p>
+<p>Notice that there is no uncertainty and the household receives a retirement
+income <span class="math notranslate nohighlight">\(\underline{\tShkEmp}\)</span> every period until death.</p>
+</section>
+<section id="the-problem-for-a-worker-household">
+<span id="id3"></span><h2>The problem for a worker household<a class="headerlink" href="#the-problem-for-a-worker-household" title="Permalink to this headline">#</a></h2>
+<p>The value function of a worker household is</p>
+<p>\p</p>
+<p>\begin{equation}
+\VFunc_{t}(\mRat_{t}, \nRat_{t}) = \Ex_\error \max \left{
+\vFunc_{t}(\mRat_{t}, \nRat_{t}, \Work) + \sigma_{\error}
+\error_{\Work} ,
+\vFunc_{t}(\mRat_{t}, \nRat_{t}, \Retire) + \sigma_{\error}
+\error_{\Retire} \right}
+\end{equation}</p>
+<p>where the choice specific problem for a working household that decides to
+continue working is</p>
+<p>\begin{equation}
+\begin{split}
+\vFunc_{t}(\mRat_{t}, \nRat_{t}, \Work) &amp; = \max_{\cRat_{t},
+\dRat_{t}} \util(\cRat_{t}) - \kapShare + \DiscFac
+\Ex_{t} \left[
+\VFunc_{t+1}(\mRat_{t+1}, \nRat_{t+1})
+\right] \
+&amp; \text{s.t.} \
+\aRat_{t} &amp; = \mRat_{t} - \cRat_{t} - \dRat_{t} \
+\bRat_{t} &amp; = \nRat_{t} + \dRat_{t} + \gFunc(\dRat_{t}) \
+\mRat_{t+1} &amp; = \Rfree_{\aRat} \aRat_{t} + \tShkEmp_{t+1} \
+\nRat_{t+1} &amp; = \Rfree_{\bRat} \bRat_{t}
+\end{split}
+\end{equation}</p>
+<p>and the choice specific problem for a working household that decides to retire
+is</p>
+<p>\begin{equation}
+\vFunc_{t}(\mRat_{t}, \nRat_{t}, \Retire) =
+\wFunc_{t}(\mRat_{t}+\nRat_{t})
+\end{equation}</p>
+</section>
+<section id="applying-the-sequential-egm">
+<span id="id4"></span><h2>Applying the Sequential EGM<a class="headerlink" href="#applying-the-sequential-egm" title="Permalink to this headline">#</a></h2>
+<p>The first step is to define a post-decision value function. Once the household
+decides their level of consumption and pension deposits, they are left with
+liquid assets they are saving for the future and illiquid assets in their
+pension account which they can’t access again until retirement. The
+post-decision value function can be defined as</p>
+<p>\begin{equation}
+\begin{split}
+\vEnd_{t}(\aRat_{t}, \bRat_{t}) &amp; =  \DiscFac
+\Ex_{t} \left[ \VFunc_{t+1}(\mRat_{t+1}, \nRat_{t+1}) \right] \
+&amp; \text{s.t.} \
+\mRat_{t+1} &amp; = \Rfree_{\aRat} \aRat_{t} + \tShkEmp_{t+1} \
+\nRat_{t+1} &amp; = \Rfree_{\bRat} \bRat_{t}
+\end{split}
+\end{equation}</p>
+<p>Then redefine the working agent’s problem as</p>
+<p>\begin{equation}
+\begin{split}
+\vFunc_{t}(\mRat_{t}, \nRat_{t}, \Work) &amp; = \max_{\cRat_{t},
+\dRat_{t}} \util(\cRat_{t})  - \kapShare + \vEnd_{t}(\aRat_{t},
+\bRat_{t}) \
+\aRat_{t} &amp; = \mRat_{t} - \cRat_{t} - \dRat_{t} \
+\bRat_{t} &amp; = \nRat_{t} + \dRat_{t} + \gFunc(\dRat_{t}) \
+\end{split}
+\end{equation}</p>
+<p>Clearly, the structure of the problem remains the same, and this is the problem
+that G2EGM solves. We’ve only moved some
+of the stochastic mechanics out of the problem. Now, we can apply the
+sequential EGM<span class="math notranslate nohighlight">\(^n\)</span> method. Let the agent first decide <span class="math notranslate nohighlight">\(\dRat_{t}\)</span>, the deposit
+amount into their retirement; we will call this the deposit problem, or outer loop. Thereafter, the
+agent will have net liquid assets
+of <span class="math notranslate nohighlight">\(\lRat_{t}\)</span> and pension assets of <span class="math notranslate nohighlight">\(\bRat_{t}\)</span>.</p>
+<p>\begin{equation}
+\begin{split}
+\vFunc_{t}(\mRat_{t}, \nRat_{t}, \Work) &amp; = \max_{\dRat_{t}}
+\vOpt_{t}(\lRat_{t}, \bRat_{t}) \
+&amp; \text{s.t.} \
+\lRat_{t} &amp; = \mRat_{t} - \dRat_{t} \
+\bRat_{t} &amp; = \nRat_{t} + \dRat_{t} + \gFunc(\dRat_{t})
+\end{split}
+\end{equation}</p>
+<p>Now, the agent can move on to picking their consumption and savings; we can call this
+the pure consumption problem or inner loop.</p>
+<p>\begin{equation}
+\begin{split}
+\vOpt_{t}(\lRat_{t}, \bRat_{t}) &amp; = \max_{\cRat_{t}}
+\util(\cRat_{t}) - \kapShare  + \vEnd_{t}(\aRat_{t}, \bRat_{t}) \
+&amp; \text{s.t.} \
+\aRat_{t} &amp; = \lRat_{t} - \cRat_{t} \
+\end{split}
+\end{equation}</p>
+<p>Because we’ve already made the pension decision, the amount of pension assets
+does not change in this loop and it just passes through to the post-decision
+value function.</p>
+</section>
+<section id="solving-the-problem">
+<span id="id5"></span><h2>Solving the problem<a class="headerlink" href="#solving-the-problem" title="Permalink to this headline">#</a></h2>
+<section id="solving-the-inner-consumption-saving-problem">
+<h3>Solving the Inner Consumption Saving Problem<a class="headerlink" href="#solving-the-inner-consumption-saving-problem" title="Permalink to this headline">#</a></h3>
+<p>Let’s start with the pure consumption-saving problem, which we can summarize by
+substitution as</p>
+<p>\begin{equation}
+\vOpt_{t}(\lRat_{t}, \bRat_{t}) = \max_{\cRat_{t}} \util(\cRat_{t}) - \kapShare +
+\vEnd_{t}(\lRat_{t} - \cRat_{t}, \bRat_{t})
+\end{equation}</p>
+<p>The first-order condition is</p>
+<p>\begin{equation}
+\util’(\cRat_{t}) = \vEnd_{t}^{\aRat}(\lRat_{t}-\cRat_{t}, \bRat_{t}) =
+\vEnd_{t}^{\aRat}(\aRat_{t}, \bRat_{t})
+\end{equation}</p>
+<p>We can invert this Euler equation as in standard EGM to obtain the consumption
+function.</p>
+<p>\begin{equation}
+\cEndFunc_{t}(\aRat_{t}, \bRat_{t}) =
+\util’^{-1}\left(\vEnd_{t}^{\aRat}(\aRat_{t}, \bRat_{t})\right)
+\end{equation}</p>
+<p>Again as before, <span class="math notranslate nohighlight">\(\lEndFunc_{t}(\aRat_{t}, \bRat_{t}) =
+    \cEndFunc_{t}(\aRat_{t}, \bRat_{t}) + \aRat_{t}\)</span>. To sum up, using an
+exogenous
+grid of <span class="math notranslate nohighlight">\((\aRat_{t}, \bRat_{t})\)</span> we obtain the trio <span class="math notranslate nohighlight">\((\cEndFunc_{t}(\aRat_{t},
+    \bRat_{t}), \lEndFunc_{t}(\aRat_{t},
+    \bRat_{t}), \bRat_{t})\)</span> which
+provides an
+interpolating function for our optimal consumption decision rule over the
+<span class="math notranslate nohighlight">\((\lRat, \bRat)\)</span> grid. Without loss of generality, assume <span class="math notranslate nohighlight">\(\lEndFunc_{t} =
+    \lEndFunc_{t}(\aRat_{t}, \bRat_{t})\)</span> and define the interpolating
+function as</p>
+<p>\begin{equation}
+\cTarg_{t}(\lEndFunc_{t}, \bRat_{t}) \equiv \cEndFunc_{t}(\aRat_{t},
+\bRat_{t})
+\end{equation}</p>
+<p>For completeness, we derive the envelope conditions as well, and as we will
+see, these will be useful when solving the next section.</p>
+<p>\begin{equation}
+\begin{split}
+\vOpt_{t}^{\lRat}(\lRat_{t}, \bRat_{t}) &amp; =
+\vEnd_{t}^{\aRat}(\aRat_{t}, \bRat_{t}) = \util’(\cRat_{t}) \
+\vOpt_{t}^{\bRat}(\lRat_{t}, \bRat_{t}) &amp; =
+\vEnd_{t}^{\bRat}(\aRat_{t}, \bRat_{t})
+\end{split}
+\end{equation}</p>
+</section>
+<section id="solving-the-outer-pension-deposit-problem">
+<h3>Solving the Outer Pension Deposit Problem<a class="headerlink" href="#solving-the-outer-pension-deposit-problem" title="Permalink to this headline">#</a></h3>
+<p>Now, we can move on to solving the deposit problem, which we can also summarize
+as</p>
+<p>\begin{equation}
+\vFunc_{t}(\mRat_{t}, \nRat_{t}, \Work) = \max_{\dRat_{t}}
+\vOpt_{t}(\mRat_{t}
+- \dRat_{t}, \nRat_{t} + \dRat_{t} + \gFunc(\dRat_{t}))
+\end{equation}</p>
+<p>The first-order condition is</p>
+<p>\begin{equation}
+\vOpt_{t}^{\lRat}(\lRat_{t}, \bRat_{t})(-1) +
+\vOpt_{t}^{\bRat}(\lRat_{t}, \bRat_{t})(1+\gFunc’(\dRat_{t})) = 0
+\end{equation}</p>
+<p>Rearranging this equation gives</p>
+<p>\begin{equation}
+\gFunc’(\dRat_{t}) = \frac{\vOpt_{t}^{\lRat}(\lRat_{t},
+\bRat_{t})}{\vOpt_{t}^{\bRat}(\lRat_{t}, \bRat_{t})} - 1
+\end{equation}</p>
+<p>Assuming that <span class="math notranslate nohighlight">\(\gFunc'(\dRat)\)</span> exists and is invertible, we can find</p>
+<p>\begin{equation}
+\dEndFunc_{t}(\lRat_{t}, \bRat_{t}) = \gFunc’^{-1}\left(
+\frac{\vOpt_{t}^{\lRat}(\lRat_{t},
+\bRat_{t})}{\vOpt_{t}^{\bRat}(\lRat_{t},
+\bRat_{t})} - 1 \right)
+\end{equation}</p>
+<p>Using this, we can back out <span class="math notranslate nohighlight">\(\nRat_{t}\)</span> as</p>
+<p>\begin{equation}
+\nEndFunc_{t}(\lRat_{t}, \bRat_{t}) = \bRat_{t} -
+\dEndFunc_{t}(\lRat_{t}, \bRat_{t}) - \gFunc(\dEndFunc_{t}(\lRat_{t},
+\bRat_{t}))
+\end{equation}</p>
+<p>and <span class="math notranslate nohighlight">\(\mRat_{t}\)</span> as</p>
+<p>\begin{equation}
+\mEndFunc_{t}(\lRat_{t}, \bRat_{t}) = \lRat_{t} +
+\dEndFunc_{t}(\lRat_{t}, \bRat_{t})
+\end{equation}</p>
+<p>In sum, given an exogenous grid <span class="math notranslate nohighlight">\((\lRat_{t}, \bRat_{t})\)</span> we obtain the triple
+<span class="math notranslate nohighlight">\(\left(\mEndFunc_{t}(\lRat_{t}, \bRat_{t}), \nEndFunc_{t}(\lRat_{t},
+        \bRat_{t}), \dEndFunc_{t}(\lRat_{t}, \bRat_{t})\right)\)</span>, which
+we can use to
+create an interpolator for the decision rule <span class="math notranslate nohighlight">\(\dRat_{t}\)</span>.</p>
+<p>To close the solution method, the envelope conditions are</p>
+<p>\begin{equation}
+\begin{split}
+\vFunc_{t}^{\mRat}(\mRat_{t}, \nRat_{t}, \Work) &amp; =
+\vOpt_{t}^{\lRat}(\lRat_{t}, \bRat_{t}) \
+\vFunc_{t}^{\nRat}(\mRat_{t}, \nRat_{t}, \Work) &amp; =
+\vOpt_{t}^{\bRat}(\lRat_{t}, \bRat_{t})
+\end{split}
+\end{equation}</p>
+</section>
+</section>
+<section id="is-g-invertible">
+<span id="id6"></span><h2>Is g invertible?<a class="headerlink" href="#is-g-invertible" title="Permalink to this headline">#</a></h2>
+<p>We’ve already seen that <span class="math notranslate nohighlight">\(\util'(\cdot)\)</span> is invertible, but is <span class="math notranslate nohighlight">\(\gFunc\)</span>?</p>
+<p>\begin{equation}
+\gFunc(\dRat) = \xFer \log(1+\dRat) \qquad \gFunc’(\dRat) =
+\frac{\xFer}{1+\dRat} \qquad \gFunc’^{-1}(y) = \xFer/y - 1
+\end{equation}</p>
+</section>
+<section id="the-post-decision-value-and-marginal-value-functions">
+<span id="id7"></span><h2>The Post-Decision Value and Marginal Value Functions<a class="headerlink" href="#the-post-decision-value-and-marginal-value-functions" title="Permalink to this headline">#</a></h2>
+<p>\begin{equation}
+\begin{split}
+\vEnd_{t}(\aRat, \bRat) &amp; =  \DiscFac \Ex_{t} \left[
+\VFunc(\mRat_{t+1}, \nRat_{t+1}) \right] \
+&amp; \text{s.t.} \
+\mRat_{t+1} &amp; = \Rfree_{\aRat} \aRat_{t} + \tShkEmp_{t+1} \
+\nRat_{t+1} &amp; = \Rfree_{\bRat} \bRat_{t}
+\end{split}
+\end{equation}</p>
+<p>and</p>
+<p>\begin{equation}
+\begin{split}
+\vEnd_{t}^{\aRat}(\aRat_{t}, \bRat_{t}) &amp; =  \DiscFac
+\Rfree_{\aRat} \Ex_{t} \left[ \VFunc^{\mRat}<em>{t+1}(\mRat</em>{t+1},
+\nRat_{t+1})
+\right] \
+&amp; \text{s.t.} \
+\mRat_{t+1} &amp; = \Rfree_{\aRat} \aRat_{t} + \tShkEmp_{t+1} \
+\nRat_{t+1} &amp; = \Rfree_{\bRat} \bRat_{t}
+\end{split}
+\end{equation}</p>
+<p>and</p>
+<p>\begin{equation}
+\begin{split}
+\vEnd_{t}^{\bRat}(\aRat_{t}, \bRat_{t}) &amp; =  \DiscFac
+\Rfree_{\bRat} \Ex_{t} \left[ \VFunc^{\nRat}<em>{t+1}(\mRat</em>{t+1},
+\nRat_{t+1})
+\right] \
+&amp; \text{s.t.} \
+\mRat_{t+1} &amp; = \Rfree_{\aRat} \aRat_{t} + \tShkEmp_{t+1} \
+\nRat_{t+1} &amp; = \Rfree_{\bRat} \bRat_{t}
+\end{split}
+\end{equation}</p>
+</section>
+<section id="taste-shocks">
+<span id="id8"></span><h2>Taste Shocks<a class="headerlink" href="#taste-shocks" title="Permalink to this headline">#</a></h2>
+<p>From discrete choice theory and from DCEGM paper, we know that</p>
+<p>\begin{equation}
+\Ex_{t} \left[
+\VFunc_{t+1}(\mRat_{t+1}, \nRat_{t+1}, \error_{t+1}) \right] =
+\sigma \log \left[ \sum_{\Decision \in {\Work, \Retire}} \exp \left(
+\frac{\vFunc_{t+1}(\mRat_{t+1}, \nRat_{t+1},
+\Decision)}{\sigma_\error}	\right) 	\right]
+\end{equation}</p>
+<p>and</p>
+<p>\begin{equation}
+\Prob_{t}(\Decision ~ \lvert ~ \mRat_{t+1}, \nRat_{t+1}) = \frac{\exp
+\left(
+\vFunc_{t + 1}(\mRat_{t+1}, \nRat_{t+1}, \Decision) /
+\sigma_\error
+\right)
+}{  \sum\limits_{\Decision \in {\Work, \Retire}}	\exp \left(
+\frac{\vFunc_{t+1}(\mRat_{t+1}, \nRat_{t+1},
+\Decision)}{\sigma_\error}	\right)}
+\end{equation}</p>
+<p>the first-order conditions are therefore</p>
+<p>\begin{equation}
+\vOptAlt_{t}^{\mRat}(\mRat_{t+1}, \nRat_{t+1}) = \sum_{\Decision \in
+{\Work, \Retire}} \Prob_{t}(\Decision ~
+\lvert ~
+\mRat_{t+1}, \nRat_{t+1}) \vFunc_{t+1}^{\mRat}(\mRat_{t+1},
+\nRat_{t+1},
+\Decision)
+\end{equation}</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Paper"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="6Conclusion.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Conclusion</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Tables/README.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">LaTeX Input Files for Tables</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-problem-for-a-retired-household">The problem for a retired household</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-problem-for-a-worker-household">The problem for a worker household</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applying-the-sequential-egm">Applying the Sequential EGM</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#solving-the-problem">Solving the problem</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solving-the-inner-consumption-saving-problem">Solving the Inner Consumption Saving Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solving-the-outer-pension-deposit-problem">Solving the Outer Pension Deposit Problem</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#is-g-invertible">Is g invertible?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-post-decision-value-and-marginal-value-functions">The Post-Decision Value and Marginal Value Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taste-shocks">Taste Shocks</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

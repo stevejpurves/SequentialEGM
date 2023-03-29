@@ -1,0 +1,103 @@
+Traceback (most recent call last):
+  File "C:\Users\alujan\miniconda3\envs\egmn-dev\lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\Users\alujan\miniconda3\envs\egmn-dev\lib\site-packages\nbclient\client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "C:\Users\alujan\miniconda3\envs\egmn-dev\lib\site-packages\nbclient\util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "C:\Users\alujan\miniconda3\envs\egmn-dev\lib\site-packages\nbclient\util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "C:\Users\alujan\miniconda3\envs\egmn-dev\lib\asyncio\base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "C:\Users\alujan\miniconda3\envs\egmn-dev\lib\site-packages\nbclient\client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\alujan\miniconda3\envs\egmn-dev\lib\site-packages\nbclient\client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\alujan\miniconda3\envs\egmn-dev\lib\site-packages\nbclient\client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+plot_scatter_hist(
+    grids["lMat"],
+    grids["b2Mat"],
+    grids["dMat"],
+    "Pension Deposit on Exogenous Grid",
+    r"Market Resources $\ell$",
+    "Retirement balance $b$",
+    "ExogenousGrid.pdf",
+)
+------------------
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mFileNotFoundError[0m                         Traceback (most recent call last)
+Cell [1;32mIn[22], line 1[0m
+[1;32m----> 1[0m [43mplot_scatter_hist[49m[43m([49m
+[0;32m      2[0m [43m    [49m[43mgrids[49m[43m[[49m[38;5;124;43m"[39;49m[38;5;124;43mlMat[39;49m[38;5;124;43m"[39;49m[43m][49m[43m,[49m
+[0;32m      3[0m [43m    [49m[43mgrids[49m[43m[[49m[38;5;124;43m"[39;49m[38;5;124;43mb2Mat[39;49m[38;5;124;43m"[39;49m[43m][49m[43m,[49m
+[0;32m      4[0m [43m    [49m[43mgrids[49m[43m[[49m[38;5;124;43m"[39;49m[38;5;124;43mdMat[39;49m[38;5;124;43m"[39;49m[43m][49m[43m,[49m
+[0;32m      5[0m [43m    [49m[38;5;124;43m"[39;49m[38;5;124;43mPension Deposit on Exogenous Grid[39;49m[38;5;124;43m"[39;49m[43m,[49m
+[0;32m      6[0m [43m    [49m[38;5;124;43mr[39;49m[38;5;124;43m"[39;49m[38;5;124;43mMarket Resources $[39;49m[38;5;124;43m\[39;49m[38;5;124;43mell$[39;49m[38;5;124;43m"[39;49m[43m,[49m
+[0;32m      7[0m [43m    [49m[38;5;124;43m"[39;49m[38;5;124;43mRetirement balance $b$[39;49m[38;5;124;43m"[39;49m[43m,[49m
+[0;32m      8[0m [43m    [49m[38;5;124;43m"[39;49m[38;5;124;43mExogenousGrid.pdf[39;49m[38;5;124;43m"[39;49m[43m,[49m
+[0;32m      9[0m [43m)[49m
+
+Cell [1;32mIn[21], line 35[0m, in [0;36mplot_scatter_hist[1;34m(x, y, color, title, xlabel, ylabel, filename)[0m
+[0;32m     32[0m ax[38;5;241m.[39mset_ylabel(ylabel)
+[0;32m     34[0m plt[38;5;241m.[39mshow()
+[1;32m---> 35[0m [43mfig[49m[38;5;241;43m.[39;49m[43msavefig[49m[43m([49m[43mfigures_path[49m[43m [49m[38;5;241;43m+[39;49m[43m [49m[43mfilename[49m[43m)[49m
+
+File [1;32m~\miniconda3\envs\egmn-dev\lib\site-packages\matplotlib\figure.py:3343[0m, in [0;36mFigure.savefig[1;34m(self, fname, transparent, **kwargs)[0m
+[0;32m   3339[0m     [38;5;28;01mfor[39;00m ax [38;5;129;01min[39;00m [38;5;28mself[39m[38;5;241m.[39maxes:
+[0;32m   3340[0m         stack[38;5;241m.[39menter_context(
+[0;32m   3341[0m             ax[38;5;241m.[39mpatch[38;5;241m.[39m_cm_set(facecolor[38;5;241m=[39m[38;5;124m'[39m[38;5;124mnone[39m[38;5;124m'[39m, edgecolor[38;5;241m=[39m[38;5;124m'[39m[38;5;124mnone[39m[38;5;124m'[39m))
+[1;32m-> 3343[0m [38;5;28mself[39m[38;5;241m.[39mcanvas[38;5;241m.[39mprint_figure(fname, [38;5;241m*[39m[38;5;241m*[39mkwargs)
+
+File [1;32m~\miniconda3\envs\egmn-dev\lib\site-packages\matplotlib\backend_bases.py:2366[0m, in [0;36mFigureCanvasBase.print_figure[1;34m(self, filename, dpi, facecolor, edgecolor, orientation, format, bbox_inches, pad_inches, bbox_extra_artists, backend, **kwargs)[0m
+[0;32m   2362[0m [38;5;28;01mtry[39;00m:
+[0;32m   2363[0m     [38;5;66;03m# _get_renderer may change the figure dpi (as vector formats[39;00m
+[0;32m   2364[0m     [38;5;66;03m# force the figure dpi to 72), so we need to set it again here.[39;00m
+[0;32m   2365[0m     [38;5;28;01mwith[39;00m cbook[38;5;241m.[39m_setattr_cm([38;5;28mself[39m[38;5;241m.[39mfigure, dpi[38;5;241m=[39mdpi):
+[1;32m-> 2366[0m         result [38;5;241m=[39m print_method(
+[0;32m   2367[0m             filename,
+[0;32m   2368[0m             facecolor[38;5;241m=[39mfacecolor,
+[0;32m   2369[0m             edgecolor[38;5;241m=[39medgecolor,
+[0;32m   2370[0m             orientation[38;5;241m=[39morientation,
+[0;32m   2371[0m             bbox_inches_restore[38;5;241m=[39m_bbox_inches_restore,
+[0;32m   2372[0m             [38;5;241m*[39m[38;5;241m*[39mkwargs)
+[0;32m   2373[0m [38;5;28;01mfinally[39;00m:
+[0;32m   2374[0m     [38;5;28;01mif[39;00m bbox_inches [38;5;129;01mand[39;00m restore_bbox:
+
+File [1;32m~\miniconda3\envs\egmn-dev\lib\site-packages\matplotlib\backend_bases.py:2232[0m, in [0;36mFigureCanvasBase._switch_canvas_and_return_print_method.<locals>.<lambda>[1;34m(*args, **kwargs)[0m
+[0;32m   2228[0m     optional_kws [38;5;241m=[39m {  [38;5;66;03m# Passed by print_figure for other renderers.[39;00m
+[0;32m   2229[0m         [38;5;124m"[39m[38;5;124mdpi[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124mfacecolor[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124medgecolor[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124morientation[39m[38;5;124m"[39m,
+[0;32m   2230[0m         [38;5;124m"[39m[38;5;124mbbox_inches_restore[39m[38;5;124m"[39m}
+[0;32m   2231[0m     skip [38;5;241m=[39m optional_kws [38;5;241m-[39m {[38;5;241m*[39minspect[38;5;241m.[39msignature(meth)[38;5;241m.[39mparameters}
+[1;32m-> 2232[0m     print_method [38;5;241m=[39m functools[38;5;241m.[39mwraps(meth)([38;5;28;01mlambda[39;00m [38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs: meth(
+[0;32m   2233[0m         [38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39m{k: v [38;5;28;01mfor[39;00m k, v [38;5;129;01min[39;00m kwargs[38;5;241m.[39mitems() [38;5;28;01mif[39;00m k [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m skip}))
+[0;32m   2234[0m [38;5;28;01melse[39;00m:  [38;5;66;03m# Let third-parties do as they see fit.[39;00m
+[0;32m   2235[0m     print_method [38;5;241m=[39m meth
+
+File [1;32m~\miniconda3\envs\egmn-dev\lib\site-packages\matplotlib\backends\backend_pdf.py:2808[0m, in [0;36mFigureCanvasPdf.print_pdf[1;34m(self, filename, bbox_inches_restore, metadata)[0m
+[0;32m   2806[0m     file [38;5;241m=[39m filename[38;5;241m.[39m_file
+[0;32m   2807[0m [38;5;28;01melse[39;00m:
+[1;32m-> 2808[0m     file [38;5;241m=[39m [43mPdfFile[49m[43m([49m[43mfilename[49m[43m,[49m[43m [49m[43mmetadata[49m[38;5;241;43m=[39;49m[43mmetadata[49m[43m)[49m
+[0;32m   2809[0m [38;5;28;01mtry[39;00m:
+[0;32m   2810[0m     file[38;5;241m.[39mnewPage(width, height)
+
+File [1;32m~\miniconda3\envs\egmn-dev\lib\site-packages\matplotlib\backends\backend_pdf.py:713[0m, in [0;36mPdfFile.__init__[1;34m(self, filename, metadata)[0m
+[0;32m    711[0m [38;5;28mself[39m[38;5;241m.[39moriginal_file_like [38;5;241m=[39m [38;5;28;01mNone[39;00m
+[0;32m    712[0m [38;5;28mself[39m[38;5;241m.[39mtell_base [38;5;241m=[39m [38;5;241m0[39m
+[1;32m--> 713[0m fh, opened [38;5;241m=[39m [43mcbook[49m[38;5;241;43m.[39;49m[43mto_filehandle[49m[43m([49m[43mfilename[49m[43m,[49m[43m [49m[38;5;124;43m"[39;49m[38;5;124;43mwb[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[43mreturn_opened[49m[38;5;241;43m=[39;49m[38;5;28;43;01mTrue[39;49;00m[43m)[49m
+[0;32m    714[0m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m opened:
+[0;32m    715[0m     [38;5;28;01mtry[39;00m:
+
+File [1;32m~\miniconda3\envs\egmn-dev\lib\site-packages\matplotlib\cbook\__init__.py:489[0m, in [0;36mto_filehandle[1;34m(fname, flag, return_opened, encoding)[0m
+[0;32m    487[0m         fh [38;5;241m=[39m bz2[38;5;241m.[39mBZ2File(fname, flag)
+[0;32m    488[0m     [38;5;28;01melse[39;00m:
+[1;32m--> 489[0m         fh [38;5;241m=[39m [38;5;28;43mopen[39;49m[43m([49m[43mfname[49m[43m,[49m[43m [49m[43mflag[49m[43m,[49m[43m [49m[43mencoding[49m[38;5;241;43m=[39;49m[43mencoding[49m[43m)[49m
+[0;32m    490[0m     opened [38;5;241m=[39m [38;5;28;01mTrue[39;00m
+[0;32m    491[0m [38;5;28;01melif[39;00m [38;5;28mhasattr[39m(fname, [38;5;124m'[39m[38;5;124mseek[39m[38;5;124m'[39m):
+
+[1;31mFileNotFoundError[0m: [Errno 2] No such file or directory: '../Figures/ExogenousGrid.pdf'
+FileNotFoundError: [Errno 2] No such file or directory: '../Figures/ExogenousGrid.pdf'
+
