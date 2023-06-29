@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://localhost:3000/sitemap_style.xsl" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>http://localhost:3000/paper</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/egmn</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/egmn/intro</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/egmn/method</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/egmn/multdim</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/egmn/multinterp</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/egmn/conditions</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/egmn/conclusion</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/egmn/appendix</loc>
+  </url>
+</urlset>
