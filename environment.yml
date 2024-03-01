@@ -21,9 +21,11 @@ dependencies:
   - ruff
   - nodejs
   - mystmd
+  - ipywidgets
   - pip
   - pip:
       - git+https://github.com/alanlujan91/HARK@map_coordinates
       - ConSav
       - EconModel
       - black[jupyter]
+      - -e ./code/
