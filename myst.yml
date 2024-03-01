@@ -82,12 +82,20 @@ project:
     heading_6: true
   bibliography:
     - content/references.bib
+  jupyter: true
+  requirements:
+    - environment.yml
+  resources:
+    - code/**
   exports:
     - format: pdf+tex
       template: arxiv_nips
       output: content/public/SequentialEGMn.pdf
       articles:
         - content/paper/egmn.md
+    - format: meca
+      article: content/paper/egmn.md
+      output: meca.zip
   abbreviations:
     GP: Gaussian Process
     GPR: Gaussian Process Regression
