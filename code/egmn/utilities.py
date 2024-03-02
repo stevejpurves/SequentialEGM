@@ -41,7 +41,7 @@ def plot_warped_bilinear_flat(function, min_x=None, max_x=None, n=100):
         plt.plot(x_grid[:, i], values[:, i])
 
 
-def plot_3d_func(func, xlims, ylims, n=100, meta={}, savename=None):
+def plot_3d_func(func, xlims, ylims, n=100, meta={}, savename=None, ax=None, show=True):
     xgrid = np.linspace(xlims[0], xlims[1], n)
     ygrid = np.linspace(ylims[0], ylims[1], n)
 
@@ -53,7 +53,8 @@ def plot_3d_func(func, xlims, ylims, n=100, meta={}, savename=None):
 
     meta_data.update(meta)
 
-    ax = plt.axes(projection="3d")
+    if ax is None:
+        ax = plt.axes(projection="3d")
     ax.plot_surface(xMat, yMat, zMat, cmap="viridis")
     ax.set_title(meta_data["title"])
     ax.set_xlabel(meta_data["xlabel"])
@@ -64,7 +65,8 @@ def plot_3d_func(func, xlims, ylims, n=100, meta={}, savename=None):
         plt.savefig(figures_path + savename + ".svg")
         plt.savefig(figures_path + savename + ".pdf")
 
-    plt.show()
+    if show:
+        plt.show()
 
 
 def plot_retired(
@@ -119,7 +121,7 @@ def scatter_hist(x, y, color, ax, ax_histx, ax_histy):
     return hist
 
 
-def plot_scatter_hist(x, y, color, title, xlabel, ylabel, filename):
+def plot_scatter_hist(x, y, color, title, xlabel, ylabel, filename, show=True):
     # Create a Figure, which doesn't have to be square.
     fig = plt.figure(figsize=(6, 6), constrained_layout=True)
     # Create the main axes, leaving 25% of the figure space at the top and on the
@@ -152,7 +154,8 @@ def plot_scatter_hist(x, y, color, title, xlabel, ylabel, filename):
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
 
-    plt.show()
+    if show:
+        plt.show()
     fig.savefig(figures_path + filename + ".svg")
     fig.savefig(figures_path + filename + ".pdf")
 
