@@ -8,6 +8,18 @@ I would like to thank Chris Carroll, Matthew White, and Simon Scheidegger for th
 
 +++
 
++++
+
+```{hint} Explorable Figures - Compute backed Interactivity
+:class: dropdown
+This paper contains interactive elements and includes a number of computational notebooks. Press the power and play button below to make this plot interactive.
+See all the code, run the notebook that creates this and a number of other notebooks in the [Supporting Documents sections](example-conspensionmodel-baseline-interact).
+:::{figure} #conspension
+:placeholder: conspension.png
+An interactive figure exploring Policy and Value Functions for ConsPensionModel.
+:::
+```
+
 (introduction)=
 
 # Introduction
