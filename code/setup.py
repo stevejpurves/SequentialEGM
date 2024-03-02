@@ -9,5 +9,5 @@ setup(
     version='0.0.1',
     description='Local package for egmn',
     packages=find_packages(include=['egmn']),    
-    install_requires=[],
+    install_requires=['estimagic'],
 )

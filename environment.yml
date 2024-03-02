@@ -7,7 +7,7 @@ dependencies:
   - scipy
   - matplotlib
   - numpy
-  - numba
+  - numba=0.58.1
   - scikit-learn
   - pandas
   - sympy
