@@ -1,0 +1,14 @@
+version: 1
+josecon:
+  work:
+    id: 018dc338-e64c-7c68-9b37-4f3d092f4252
+    date_created: '2024-03-03T15:15:46.239Z'
+  workVersion:
+    id: 018e04e2-a5bf-7307-94f2-dfee90b7b33e
+    date_created: '2024-03-03T15:15:46.239Z'
+  submission:
+    id: 018dc338-e894-7ba6-8cc8-6be12fd26c95
+    date_created: '2024-02-19T21:15:03.179Z'
+  submissionVersion:
+    id: 018dc338-e894-7ba6-8cc8-6be096db524e
+    date_created: '2024-02-19T21:15:03.179Z'
