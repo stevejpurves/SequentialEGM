@@ -40,6 +40,33 @@ def plot_warped_bilinear_flat(function, min_x=None, max_x=None, n=100):
     for i in range(len(y_grid[0])):
         plt.plot(x_grid[:, i], values[:, i])
 
+def plot_3d_data(func, xlims, ylims, n=100, meta={}, savename=None, ax=None, show=True):
+    xgrid = np.linspace(xlims[0], xlims[1], n)
+    ygrid = np.linspace(ylims[0], ylims[1], n)
+
+    xMat, yMat = np.meshgrid(xgrid, ygrid, indexing="ij")
+
+    zMat = func(xMat, yMat)
+
+    meta_data = {"title": "surface", "xlabel": "x", "ylabel": "y", "zlabel": "function"}
+
+    meta_data.update(meta)
+
+    if ax is None:
+        ax = plt.axes(projection="3d")
+    ax.plot_surface(xMat, yMat, zMat, cmap="viridis")
+    ax.set_title(meta_data["title"])
+    ax.set_xlabel(meta_data["xlabel"])
+    ax.set_ylabel(meta_data["ylabel"])
+    ax.set_zlabel(meta_data["zlabel"])
+
+    if savename is not None:
+        plt.savefig(figures_path + savename + ".svg")
+        plt.savefig(figures_path + savename + ".pdf")
+
+    if show:
+        plt.show()
+
 
 def plot_3d_func(func, xlims, ylims, n=100, meta={}, savename=None, ax=None, show=True):
     xgrid = np.linspace(xlims[0], xlims[1], n)
